@@ -1,0 +1,14 @@
+{
+  "name": "webads-studio",
+  "version": "1.0.0",
+  "description": "WebAds.Studio - We Build. We Convert. We Scale.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}

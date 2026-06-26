@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebAds.Studio — We Build. We Convert. We Scale.</title>
+  <meta name="description" content="We build high-speed websites and run conversion-optimized ad campaigns that generate customers. Get your free blueprint.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & BRANDING
+       ========================================================================== */
+    :root {
+      --bg: #030407;
+      --bg-elevated: #080a10;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-hover: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(255, 255, 255, 0.12);
+      
+      /* Colors */
+      --cyan: #00d2ff;
+      --violet: #8f5fe6;
+      --pink: #ff007f;
+      --text: #f8fafc;
+      --text-muted: #8a99ad;
+      --text-dim: #5c6b7e;
+      
+      /* Gradients */
+      --grad-logo-cyan: #00c3ff;
+      --grad-logo-violet: #8e5fe6;
+      --grad-button: linear-gradient(90deg, #00c6ff 0%, #0072ff 50%, #8e5fe6 100%);
+      --grad-text: linear-gradient(90deg, #00d2ff 0%, #8f5fe6 100%);
+      
+      /* Typography */
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      
+      /* Utilities */
+      --radius: 18px;
+      --radius-sm: 10px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* Grid overlay styling */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.008) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Subtle background glow spheres & Motion drift animations */
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, -30px) scale(1.08); }
+      100% { transform: translate(-30px, 40px) scale(0.96); }
+    }
+    .bg-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      opacity: 0.15;
+      z-index: 0;
+      animation: drift 15s infinite alternate ease-in-out;
+    }
+    .glow-cyan {
+      top: 5%;
+      left: -10%;
+      background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .glow-violet {
+      top: 30%;
+      right: -10%;
+      background: radial-gradient(circle, var(--violet) 0%, transparent 70%);
+      animation-delay: -4s;
+    }
+    .glow-pink {
+      bottom: 10%;
+      left: 20%;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      animation-delay: -8s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ==========================================================================
+       ANIMATIONS
+       ========================================================================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-grid {
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       HEADER / NAVBAR
+       ========================================================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      background: rgba(3, 4, 7, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 20px;
+      font-weight: 800;
+      font-family: var(--font-display);
+    }
+    .logo-bolt {
+      color: #ff9f0a;
+      font-size: 20px;
+    }
+    .logo-web {
+      color: var(--grad-logo-cyan);
+    }
+    .logo-ads {
+      color: var(--grad-logo-violet);
+    }
+    .logo-studio {
+      color: #ffffff;
+    }
+    .nav-btn {
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 100px;
+      background: transparent;
+      border: 1px solid rgba(0, 210, 255, 0.4);
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover {
+      background: rgba(0, 210, 255, 0.08);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 130px;
+      padding-bottom: 80px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 991px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .text-gradient {
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline;
+    }
+    .hero-desc {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.65;
+      max-width: 580px;
+    }
+    @media (max-width: 991px) {
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 100px;
+      background: var(--grad-button);
+      color: #030407;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 114, 255, 0.25);
+    }
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.4);
+    }
+
+    /* Terminal visual card from user's image */
+    .terminal-card {
+      background: rgba(10, 12, 20, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    .term-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .term-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .term-val {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .term-lbl {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .term-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .term-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .term-icon {
+      font-size: 11px;
+    }
+    .term-cyan { color: var(--cyan); }
+    .term-gray { color: var(--text-muted); }
+    .term-pink { color: #f15bb5; }
+
+    /* ==========================================================================
+       STATS
+       ========================================================================== */
+    .stats {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.005);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .stat-box {
+      text-align: center;
+      padding: 20px;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       SERVICES / BLUEPRINTS
+       ========================================================================== */
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 100px auto 60px;
+    }
+    .section-lbl {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 991px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 767px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    /* Hero Visual Card 3D Perspective Rotation from portfolio3 */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+    .visual-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      position: relative;
+      transform: perspective(1000px) rotateY(-12deg) rotateX(12deg);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+    .visual-card:hover {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+      border-color: rgba(0, 210, 255, 0.3);
+    }
+    .visual-card-glow {
+      position: absolute;
+      inset: -1px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 100%);
+      z-index: -1;
+      opacity: 0.15;
+      filter: blur(12px);
+      transition: opacity 0.5s ease;
+    }
+    .visual-card:hover .visual-card-glow {
+      opacity: 0.3;
+    }
+    .visual-stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .visual-stat {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .visual-stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    /* Logo Styling copied from portfolio.html */
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-family: var(--font-display);
+    }
+    .logo span {
+      background: linear-gradient(135deg, #00f2fe, #7f00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Process Card Classy 3D Tilt Effect */
+    .process-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.5s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .process-card:hover {
+      transform: translateY(-6px) rotateX(8deg) rotateY(-4deg);
+      border-color: var(--cyan);
+      box-shadow: 
+        0 15px 30px rgba(0, 210, 255, 0.12),
+        0 0 20px rgba(143, 95, 230, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Work Showcase cards from portfolio2 */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1100px) {
+      .work-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .work-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+    }
+    .work-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(0, 210, 255, 0.15);
+    }
+    .card-visual {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card-info {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .card-tag {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      background: transparent;
+    }
+
+    /* Mockups styling from portfolio2 */
+    .v-search { background: linear-gradient(135deg, #0a1628, #0d0d0d); }
+    .v-display { background: linear-gradient(135deg, #1a0a2e, #0d0d0d); }
+    .v-youtube { background: linear-gradient(135deg, #1a0505, #0d0d0d); }
+    .v-meta { background: linear-gradient(135deg, #050d1a, #0d0d0d); }
+    .v-web { background: linear-gradient(135deg, #0a1a0a, #0d0d0d); }
+
+    .search-mockup {
+      width: 90%;
+      max-width: 340px;
+      text-align: left;
+    }
+    .sm-url { font-size: 11px; color: #4ade80; margin-bottom: 2px; }
+    .sm-title { font-size: 15px; color: #60a5fa; font-weight: 600; margin-bottom: 4px; }
+    .sm-desc { font-size: 11px; color: #888; line-height: 1.4; }
+    .sm-badge { font-size: 9px; background: rgba(255,255,255,0.1); color: #aaa; padding: 2px 6px; border-radius: 2px; display: inline-block; margin-bottom: 4px; }
+
+    .yt-mockup {
+      width: 90%;
+      max-width: 320px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .yt-play {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .yt-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      padding: 8px;
+      z-index: 2;
+      text-align: left;
+    }
+    .yt-ad-label {
+      background: #facc15;
+      color: #000;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-right: 6px;
+    }
+    .yt-ad-text { font-size: 11px; color: #fff; }
+
+    .meta-mockup {
+      width: 90%;
+      max-width: 300px;
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: left;
+    }
+    .meta-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .meta-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .meta-name { font-size: 11px; font-weight: 600; color: #e4e6eb; }
+    .meta-spn { font-size: 9px; color: #777; }
+    .meta-body { font-size: 11px; color: #ccc; line-height: 1.4; margin-bottom: 8px; }
+    .meta-cta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .meta-cta-text { font-size: 10px; color: #aaa; }
+    .meta-cta-btn {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .web-mockup {
+      width: 90%;
+      max-width: 340px;
+    }
+    .term-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .term-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .term-dot:nth-child(1) { background: #ef4444; }
+    .term-dot:nth-child(2) { background: #f59e0b; }
+    .term-dot:nth-child(3) { background: #22c55e; }
+    .term-line {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.7;
+      text-align: left;
+    }
+    .term-green { color: #4ade80; }
+    .term-purple { color: #c084fc; }
+    .term-blue { color: #60a5fa; }
+    .term-dim { color: #555; }
+
+    .display-mockup {
+      width: 90%;
+      max-width: 300px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 20px;
+      text-align: center;
+    }
+    .display-label {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .display-headline {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .display-sub { font-size: 11px; color: #777; margin-bottom: 12px; }
+    .display-btn-mock {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 4px;
+    }
+
+    /* ==========================================================================
+       4-PHASE PROCESS SECTION
+       ========================================================================== */
+    .process-sec {
+      padding: 100px 0;
+      background: #05060b;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 50px;
+    }
+    @media (max-width: 991px) {
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 575px) {
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .process-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+    .process-card:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+    }
+    .process-num {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-bottom: 16px;
+    }
+    .process-h {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .process-p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       CONTACT / LEAD FUNNEL
+       ========================================================================== */
+    .contact-sec {
+      padding: 100px 0;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 991px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    .contact-info h2 {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .contact-info p {
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .bullets {
+      list-style: none;
+    }
+    .bullet-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .bullet-chk {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(0, 210, 255, 0.08);
+      border: 1px solid rgba(0, 210, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .form-wrapper {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    @media (max-width: 480px) {
+      .form-wrapper {
+        padding: 24px;
+      }
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 210, 255, 0.15);
+    }
+    select.form-input {
+      cursor: pointer;
+    }
+    select.form-input option {
+      background: var(--bg);
+      color: var(--text);
+    }
+    textarea.form-input {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: var(--grad-button);
+      color: #030407;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 114, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    .submit-btn:hover {
+      box-shadow: 0 10px 24px rgba(0, 210, 255, 0.35);
+      transform: translateY(-1px);
+    }
+    .success-alert {
+      display: none;
+      background: rgba(0, 210, 255, 0.08);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    /* ==========================================================================
+       ADMIN LEADS BASE
+       ========================================================================== */
+    .admin-card {
+      display: none;
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .admin-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+    .admin-ctrls {
+      display: flex;
+      gap: 8px;
+    }
+    .admin-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-display);
+    }
+    .btn-csv { background: var(--cyan); color: #030407; }
+    .btn-clear { background: #ef4444; color: #fff; }
+    .admin-btn:hover { opacity: 0.9; }
+    
+    .tbl-wrap {
+      overflow-x: auto;
+    }
+    .tbl-leads {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .tbl-leads th, .tbl-leads td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tbl-leads th {
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+    .tbl-leads tr:hover {
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer {
+      padding: 45px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 12px;
+      position: relative;
+      z-index: 5;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .portal-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .portal-link:hover {
+      color: var(--cyan);
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 7, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #080a10;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+    .modal-content h4 {
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+    .modal-btn-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background glow particles -->
+  <div class="bg-glow glow-cyan"></div>
+  <div class="bg-glow glow-violet"></div>
+  <div class="bg-glow glow-pink"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="logo">
+        ⚡ <span>WebAds</span>.Studio
+      </div>
+      <a href="#leads" class="nav-btn">Get Free Quote</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-badge">
+          <div class="badge-dot"></div> Available for new projects
+        </div>
+        <h1>We Build Websites & Run Ads <br><span class="text-gradient">That Generate Customers</span></h1>
+        <p class="hero-desc">Stop paying agencies for pretty websites that get zero calls. We design premium, high-speed sales pages integrated directly with verified Google Tag and Facebook Pixel tracking campaigns.</p>
+        <a href="#leads" class="hero-btn">Get Your Business Blueprint →</a>
+      </div>
+      
+      <div>
+        <!-- visual-card with 3D hover from portfolio3 -->
+        <div class="visual-card">
+          <div class="visual-card-glow"></div>
+          <div class="visual-stat-row">
+            <div>
+              <div class="visual-stat">7-Day</div>
+              <div class="visual-stat-lbl">Deployment</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="visual-stat" style="color: var(--cyan);">100%</div>
+              <div class="visual-stat-lbl">Policy Safe</div>
+            </div>
+          </div>
+          
+          <div class="term-lines">
+            <div class="term-line">
+              <span class="term-icon term-cyan">✦</span>
+              <span class="term-cyan">System initialized...</span>
+            </div>
+            <div class="term-line">
+              <span class="term-icon term-gray">✦</span>
+              <span class="term-gray">Code standard: SEO Optimized</span>
+            </div>
+            <div class="term-line">
+              <span class="term-icon term-gray">✦</span>
+              <span class="term-gray">Tracking status: ACTIVE</span>
+            </div>
+            <div class="term-line">
+              <span class="term-icon term-pink">✦</span>
+              <span class="term-pink">Conversions verification: OK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats reveal">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-num" data-target="12">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" data-target="50">0</div>
+          <div class="stat-label">Websites Delivered</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" data-target="100">0</div>
+          <div class="stat-label">Campaigns Run</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" data-target="98">0</div>
+          <div class="stat-label">Success Rate %</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK SHOWCASE -->
+  <section class="work-sec reveal" id="work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-lbl">Our Work</span>
+        <h2 class="section-title">Real campaigns. Real results.</h2>
+        <p class="section-desc">Every project is a complete system — from design and development to ad campaign setup and live conversion tracking.</p>
+      </div>
+
+      <div class="work-grid">
+
+        <!-- Card 1: Web Dev -->
+        <div class="work-card">
+          <div class="card-visual v-web">
+            <div class="web-mockup">
+              <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+              <div class="term-line">
+                <span class="term-dim">$</span> npm run build<br>
+                <span class="term-green">✓ 18 modules transformed</span><br>
+                <span class="term-purple">dist/index.html — 96.74 kB</span><br>
+                <span class="term-blue">✓ Deployed to Cloudflare</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-badge" style="background: rgba(0, 210, 255, 0.08); color: var(--cyan);">Web Development</div>
+            <div class="card-name" style="font-size: 20px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display);">Mahadev Tours & Travels</div>
+            <p class="card-info" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Interactive touring site with 4-language translation, A4 print-ready brochure engine, and Cloudflare deployment.</p>
+            <div class="card-tags">
+              <span class="card-tag">Vite</span>
+              <span class="card-tag">Multilingual</span>
+              <span class="card-tag">Print PDF</span>
+              <span class="card-tag">Cloudflare</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Google Search -->
+        <div class="work-card">
+          <div class="card-visual v-search">
+            <div class="search-mockup">
+              <div class="sm-badge">Sponsored</div>
+              <div class="sm-url">mahadevyatra.in</div>
+              <div class="sm-title">Chardham Yatra 2026 | 14-Day Premium Package</div>
+              <div class="sm-desc">Experience a peaceful 14-day Chardham Yatra with cozy stays and pure Sattvik Bhojan. Chat on WhatsApp.</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-badge" style="background: rgba(0, 210, 255, 0.08); color: var(--cyan);">Google Search Ads</div>
+            <div class="card-name" style="font-size: 20px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display);">Responsive Search Campaign</div>
+            <p class="card-info" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">15 headlines, 4 descriptions, 6 sitelinks, price extensions, and structured snippets — all policy-safe.</p>
+            <div class="card-tags">
+              <span class="card-tag">RSA</span>
+              <span class="card-tag">Sitelinks</span>
+              <span class="card-tag">Callouts</span>
+              <span class="card-tag">Price Ext</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Display -->
+        <div class="work-card">
+          <div class="card-visual v-display">
+            <div class="display-mockup">
+              <div class="display-label">Google Display Banner</div>
+              <div class="display-headline" style="background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Chardham Yatra 2026</div>
+              <div class="display-sub">Comfortable Hotels • Sattvik Bhojan • 3AC Train</div>
+              <div class="display-btn-mock" style="background: var(--cyan); color: #000;">Book Now →</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-badge" style="background: rgba(0, 210, 255, 0.08); color: var(--cyan);">Performance Max</div>
+            <div class="card-name" style="font-size: 20px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display);">Display & Banner Ads</div>
+            <p class="card-info" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Multi-format visual banners auto-served across Google's Display Network, Gmail, and Discover placements.</p>
+            <div class="card-tags">
+              <span class="card-tag">Portrait 4:5</span>
+              <span class="card-tag">Square 1:1</span>
+              <span class="card-tag">Landscape</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: YouTube -->
+        <div class="work-card">
+          <div class="card-visual v-youtube">
+            <div class="yt-mockup">
+              <div class="yt-play" style="background: rgba(0, 210, 255, 0.9);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <div class="yt-overlay">
+                <span class="yt-ad-label">Ad</span>
+                <span class="yt-ad-text">Chardham Yatra Tour 2026</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-badge" style="background: rgba(0, 210, 255, 0.08); color: var(--cyan);">YouTube Ads</div>
+            <div class="card-name" style="font-size: 20px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display);">In-Stream & Shorts Video</div>
+            <p class="card-info" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Engaging 30-sec video campaigns served on YouTube targeting pilgrimage & travel interest audiences.</p>
+            <div class="card-tags">
+              <span class="card-tag">Shorts 9:16</span>
+              <span class="card-tag">In-Stream 16:9</span>
+              <span class="card-tag">Bumper</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Meta -->
+        <div class="work-card">
+          <div class="card-visual v-meta">
+            <div class="meta-mockup">
+              <div class="meta-head">
+                <div class="meta-avatar" style="background: linear-gradient(135deg, var(--cyan), var(--violet));">M</div>
+                <div><div class="meta-name">Mahadev Yatra</div><div class="meta-spn">Sponsored</div></div>
+              </div>
+              <div class="meta-body">माता-पिता के लिए आरामदायक चारधाम यात्रा 2026! 🚗 इनोवा गाड़ियां, सात्विक भोजन...</div>
+              <div class="meta-cta-bar" style="background: #181824;">
+                <div class="meta-cta-text">MAHADEVYATRA.IN</div>
+                <div class="meta-cta-btn" style="background: #25d366;">Send Message</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-badge" style="background: rgba(0, 210, 255, 0.08); color: var(--cyan);">Meta Campaigns</div>
+            <div class="card-name" style="font-size: 20px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display);">Facebook & Instagram Ads</div>
+            <p class="card-info" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Emotionally targeted carousel and video ads optimized for Meta's Contact conversion event → WhatsApp.</p>
+            <div class="card-tags">
+              <span class="card-tag">Feed 1:1</span>
+              <span class="card-tag">Reels 9:16</span>
+              <span class="card-tag">Pixel</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS / SYSTEM SECTION -->
+  <section class="process-sec reveal">
+    <div class="container">
+      <div class="section-header" style="margin-top: 0;">
+        <span class="section-lbl">Execution System</span>
+        <h2 class="section-title">Our 4-Phase System</h2>
+        <p class="section-desc">We align your landing pages, tracking metrics, and advertising to achieve seamless growth.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-num">01</div>
+          <h3 class="process-h">Consultation</h3>
+          <p class="process-p">We study your business framework, evaluate target audiences, and audit current marketing funnels.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">02</div>
+          <h3 class="process-h">Architecture</h3>
+          <p class="process-p">We build responsive web layouts integrated with conversion tracking codes from day one.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">03</div>
+          <h3 class="process-h">Traffic Launch</h3>
+          <p class="process-p">We design high-converting, compliant ad campaigns to feed your web platform with relevant traffic.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">04</div>
+          <h3 class="process-h">Bid Scale</h3>
+          <p class="process-p">We verify conversion loops, adjust bids, and optimize ad groups to scale user conversion actions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD CAPTURE FORM SECTION -->
+  <section class="contact-sec reveal" id="leads">
+    <div class="container contact-grid">
+      <div class="contact-info">
+        <h2>Secure Your Custom <span class="text-gradient">Growth Blueprint</span></h2>
+        <p>Drop your details below. We'll audit your business space, draft custom campaign structures, and send a personalized yatra blueprint directly to you on WhatsApp within 24 hours.</p>
+        
+        <ul class="bullets">
+          <li class="bullet-item">
+            <div class="bullet-chk">✓</div>
+            <span>No-obligation custom mockup blueprint</span>
+          </li>
+          <li class="bullet-item">
+            <div class="bullet-chk">✓</div>
+            <span>Competitor keywords & ad group audit</span>
+          </li>
+          <li class="bullet-item">
+            <div class="bullet-chk">✓</div>
+            <span>Direct WhatsApp response within 24 hours</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-wrapper">
+        <div id="successMsg" class="success-alert">✓ Submitted! We will message you on WhatsApp shortly.</div>
+        
+        <form id="leadForm" onsubmit="saveLead(event)">
+          <div class="form-group">
+            <label class="form-label" for="uName">Full Name <span style="color:var(--cyan);">*</span></label>
+            <input type="text" id="uName" class="form-input" placeholder="Your name" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="uPhone">WhatsApp Number <span style="color:var(--cyan);">*</span></label>
+            <input type="tel" id="uPhone" class="form-input" placeholder="e.g. 9876543210" pattern="[0-9]{10,12}" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="uService">Service Goal <span style="color:var(--cyan);">*</span></label>
+            <select id="uService" class="form-input" required>
+              <option value="" disabled selected>Select an option</option>
+              <option value="Website Development Only">Website Development Only</option>
+              <option value="Website + Advertisements">Website + Advertisements (Recommended)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="uComments">Comments / Suggestions</label>
+            <textarea id="uComments" class="form-input" placeholder="Tell us about your project..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Request My Blueprint 🚀</button>
+        </form>
+
+        <!-- Admin Leads Database Console -->
+        <div id="adminPanel" class="admin-card">
+          <div class="admin-header">
+            <div class="admin-title">Leads Console</div>
+            <div class="admin-ctrls">
+              <button onclick="exportCSV()" class="admin-btn btn-csv">Export CSV</button>
+              <button onclick="clearLeads()" class="admin-btn btn-clear">Clear All</button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl-leads">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Name</th>
+                  <th>WhatsApp</th>
+                  <th>Service</th>
+                  <th>Comments</th>
+                </tr>
+              </thead>
+              <tbody id="tblBody">
+                <!-- leads appended by js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="logo" style="justify-content: center; margin-bottom: 12px;">
+        ⚡ <span>WebAds</span>.Studio
+      </div>
+      <p>© 2026 WebAds.Studio. Engineering growth systems.</p>
+      <span class="portal-link" onclick="triggerAdmin()" title="Portal Access">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Credentials Auth Modal -->
+  <div id="authModal" class="modal-overlay" onclick="closeAdmin()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h4>Terminal Authentication</h4>
+      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Unlock the encrypted local leads database.</p>
+      <input type="password" id="adminPwd" class="form-input" placeholder="Password" style="text-align: center; margin-bottom: 12px;">
+      <div class="modal-btn-row">
+        <button onclick="checkCreds()" class="admin-btn btn-csv" style="padding: 8px 18px;">Unlock</button>
+        <button onclick="closeAdmin()" class="admin-btn" style="background:#1c1f2e; color:#fff; padding: 8px 18px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =============== ANIMATE COUNTER STATISTICS & REVEALS ===============
+    const ioObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const statNums = entry.target.querySelectorAll('.stat-num');
+          statNums.forEach(num => startCounter(num));
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => ioObserver.observe(el));
+
+    function startCounter(el) {
+      if (el.dataset.completed === "true") return;
+      el.dataset.completed = "true";
+      const target = parseInt(el.dataset.target, 10);
+      const speed = 2000; // total duration
+      const steps = 100;
+      const stepValue = target / steps;
+      let val = 0;
+      let count = 0;
+
+      const interval = setInterval(() => {
+        val += stepValue;
+        count++;
+        if (count >= steps) {
+          val = target;
+          clearInterval(interval);
+        }
+        el.textContent = Math.floor(val) + (target === 98 ? '%' : '+');
+      }, speed / steps);
+    }
+
+    // =============== SAVE LEADS TO LOCAL STORAGE ===============
+    function saveLead(e) {
+      e.preventDefault();
+      
+      const newLead = {
+        timestamp: new Date().toLocaleString(),
+        name: document.getElementById('uName').value.trim(),
+        phone: document.getElementById('uPhone').value.trim(),
+        service: document.getElementById('uService').value,
+        comments: document.getElementById('uComments').value.trim() || 'None'
+      };
+
+      let leads = JSON.parse(localStorage.getItem('webads_leads')) || [];
+      leads.push(newLead);
+      localStorage.setItem('webads_leads', JSON.stringify(leads));
+
+      // Reset form
+      document.getElementById('leadForm').reset();
+
+      // Show alert & scroll
+      const successBox = document.getElementById('successMsg');
+      successBox.style.display = 'block';
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Refresh console if visible
+      if (document.getElementById('adminPanel').style.display === 'block') {
+        renderLeads();
+      }
+
+      setTimeout(() => {
+        successBox.style.display = 'none';
+      }, 5000);
+    }
+
+    // =============== ADMIN CONSOLE PORTAL ===============
+    function triggerAdmin() {
+      document.getElementById('authModal').style.display = 'flex';
+      document.getElementById('adminPwd').focus();
+    }
+
+    function closeAdmin() {
+      document.getElementById('authModal').style.display = 'none';
+      document.getElementById('adminPwd').value = '';
+    }
+
+    function checkCreds() {
+      const pwd = document.getElementById('adminPwd').value;
+      if (pwd === 'admin') {
+        closeAdmin();
+        document.getElementById('adminPanel').style.display = 'block';
+        renderLeads();
+        document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('Authentication rejected.');
+      }
+    }
+
+    function safe(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function renderLeads() {
+      const tbody = document.getElementById('tblBody');
+      tbody.innerHTML = '';
+      const leadsList = JSON.parse(localStorage.getItem('webads_leads')) || [];
+
+      if (leadsList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-dim);">No leads in database.</td></tr>';
+        return;
+      }
+
+      leadsList.slice().reverse().forEach(lead => {
+        tbody.innerHTML += `<tr>
+          <td>${lead.timestamp}</td>
+          <td style="font-weight:700; color:#fff;">${safe(lead.name)}</td>
+          <td><a href="https://wa.me/${lead.phone.replace(/\D/g,'')}" target="_blank" style="color:var(--cyan); font-weight:700;">💬 ${safe(lead.phone)}</a></td>
+          <td><span style="background:rgba(0, 210, 255, 0.06); color:var(--cyan); padding:2px 8px; border-radius:4px; font-size:10px;">${safe(lead.service)}</span></td>
+          <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${safe(lead.comments)}">${safe(lead.comments)}</td>
+        </tr>`;
+      });
+    }
+
+    function clearLeads() {
+      if (confirm('Clear the entire database?')) {
+        localStorage.removeItem('webads_leads');
+        renderLeads();
+      }
+    }
+
+    function exportCSV() {
+      const list = JSON.parse(localStorage.getItem('webads_leads')) || [];
+      if (list.length === 0) {
+        alert('Database empty.');
+        return;
+      }
+
+      let csv = 'data:text/csv;charset=utf-8,Timestamp,Name,WhatsApp,Service,Comments\r\n';
+      list.forEach(lead => {
+        csv += `"${lead.timestamp}","${lead.name.replace(/"/g,'""')}","${lead.phone}","${lead.service}","${lead.comments.replace(/"/g,'""')}"\r\n`;
+      });
+
+      const uri = encodeURI(csv);
+      const link = document.createElement('a');
+      link.setAttribute('href', uri);
+      link.setAttribute('download', `leads_console_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
