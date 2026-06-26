@@ -1450,6 +1450,10 @@
   </div>
 
   <script>
+    // =============== CONFIGURATION ===============
+    // Paste your Google Apps Script Web App URL here once deployed
+    const SHEETS_WEBAPP_URL = "YOUR_GOOGLE_SCRIPT_WEBAPP_URL";
+
     // =============== ANIMATE COUNTER STATISTICS & REVEALS ===============
     const ioObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1484,7 +1488,7 @@
       }, speed / steps);
     }
 
-    // =============== SAVE LEADS TO LOCAL STORAGE ===============
+    // =============== SAVE LEADS TO LOCAL STORAGE & GOOGLE SHEETS ===============
     function saveLead(e) {
       e.preventDefault();
       
@@ -1496,9 +1500,24 @@
         comments: document.getElementById('uComments').value.trim() || 'None'
       };
 
+      // 1. Save to local storage for local admin console
       let leads = JSON.parse(localStorage.getItem('webads_leads')) || [];
       leads.push(newLead);
       localStorage.setItem('webads_leads', JSON.stringify(leads));
+
+      // 2. Submit to Google Sheets via Apps Script Web App
+      if (SHEETS_WEBAPP_URL && SHEETS_WEBAPP_URL !== "YOUR_GOOGLE_SCRIPT_WEBAPP_URL") {
+        fetch(SHEETS_WEBAPP_URL, {
+          method: 'POST',
+          mode: 'no-cors', // standard to bypass CORS limits on google redirects
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newLead)
+        })
+        .then(() => console.log('Lead submitted to Google Sheets successfully'))
+        .catch(err => console.error('Error posting to Sheets:', err));
+      }
 
       // Reset form
       document.getElementById('leadForm').reset();
@@ -1517,6 +1536,7 @@
         successBox.style.display = 'none';
       }, 5000);
     }
+
 
     // =============== ADMIN CONSOLE PORTAL ===============
     function triggerAdmin() {
